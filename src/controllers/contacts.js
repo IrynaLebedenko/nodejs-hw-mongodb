@@ -1,4 +1,5 @@
-import { getAllContacts, getContactById } from '../services/contacts.js';
+import { getAllContacts } from '../services/contacts.js';
+import {  getContactById } from '../services/contactById.js';
 
 export const getContacts = async (req, res) => {
   try {
