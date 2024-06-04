@@ -6,6 +6,6 @@ export const getContactById = async (id) => {
         return contact;
     } catch(error){
         console.error(error);
-        throw new Error('Failed to fetch contact');
+        throw new Error('Not found');
     }
 };

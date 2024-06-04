@@ -5,8 +5,8 @@ export const getAllContacts = async () => {
     const contacts = await Contact.find();
     return contacts;
   } catch (error){
-    console.error(error);
-    throw new Error('Failed to fetch contacts');
+    console.error('Not found:', error);
+    throw new Error('Not found');
   }
 };
 

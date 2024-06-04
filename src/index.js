@@ -4,6 +4,7 @@ import initMongoConnection from './db/initMongoConnection.js';
 
 const startServer = async () => {
     try {
+        console.log('successful startServer');
         await initMongoConnection();
         setupServer();
     }catch(error){
