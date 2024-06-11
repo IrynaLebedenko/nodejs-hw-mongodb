@@ -2,7 +2,8 @@ import express from 'express';
 import cors from 'cors';
 // import pino from 'pino';
 import pinoHttp from 'pino-http';
-import { getContacts, getContact } from './controllers/contacts.js';
+import { getAllContacts,
+    getContactById } from './services/contacts.js';
 
 
 import { isHttpError } from 'http-errors';
@@ -15,8 +16,8 @@ import { MongooseError } from 'mongoose';
     app.use(cors());
     app.use(pinoHttp());
 
-    app.get('/contacts', getContacts);
-    app.get('/contacts/:contactId', getContact);
+    app.get('/contacts', getAllContacts);
+    app.get('/contacts/:contactId', getContactById);
   
     app.use((req, res) => {
     res.status(404).json({
