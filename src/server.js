@@ -2,8 +2,8 @@ import express from 'express';
 import cors from 'cors';
 // import pino from 'pino';
 import pinoHttp from 'pino-http';
-import { getContacts } from './controllers/contacts.js';
-import { getContact } from './controllers/contactById.js';
+import { getContacts, getContact } from './controllers/contacts.js';
+
 
 import { isHttpError } from 'http-errors';
 import { MongooseError } from 'mongoose';
