@@ -3,6 +3,7 @@ import { getAllContacts,
         //  createContact,
          updateContact,
          deleteContact,
+        //  patchContact,
  } from '../services/contacts.js';
  import createHttpError from 'http-errors';
  import Contact from '../models/contacts.js';
@@ -11,22 +12,21 @@ import { getAllContacts,
     const contacts = await getAllContacts();
   
     res.status(200).json({
+      status: 'success',
+      message: 'Successfully retrieved all contacts',
       data: contacts,
     });
   };
   
-  export const getContactByIdController = async (req, res, next) => {
+  export const getContactByIdController = async (req, res) => {
     const { contactId } = req.params;
     const contact = await getContactById(contactId);
   
     if (!contact) {
-      next(createHttpError(404, {
-        status: 404, 
-        message: 'Not found',
-        data: { message: 'Contact not found'}
-      }));
-      return;
-    }
+      const error = new Error('Contact not found');
+      error.status = 404;
+      throw error;
+      }
   
     res.status(200).json({
       status: 200,

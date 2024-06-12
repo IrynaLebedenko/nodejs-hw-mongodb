@@ -1,10 +1,9 @@
 import express from 'express';
 import cors from 'cors';
-// import pino from 'pino';
 import pinoHttp from 'pino-http';
-import { getAllContacts,
-    getContactById } from './services/contacts.js';
-
+// import { getAllContacts,
+//     getContactById } from './services/contacts.js';
+// import router from './routers/contacts';
 
 import { isHttpError } from 'http-errors';
 import { MongooseError } from 'mongoose';
@@ -16,9 +15,30 @@ import { MongooseError } from 'mongoose';
     app.use(cors());
     app.use(pinoHttp());
 
-    app.get('/contacts', getAllContacts);
-    app.get('/contacts/:contactId', getContactById);
-  
+    // app.get('/contacts', getAllContacts);
+    // app.get('/contacts/:contactId', getContactById);
+  app.use((err, req, res) =>{
+    if (isHttpError(err)) {
+      res.status(err.status).json({
+        status: err.status,
+        message: err.message,
+        data: err,
+      });
+      return;
+    }
+
+    if (err instanceof MongooseError) {
+      res.status(500).json({
+        status: err.status,
+        message: 'Mongoose error',
+      });
+      return;
+    }
+    res.status(500).json({
+      message: 'Something went wrong',
+      error: err.message,
+    });
+  });
     app.use((req, res) => {
     res.status(404).json({
         message: 'Not found',
@@ -35,17 +55,17 @@ import { MongooseError } from 'mongoose';
   
  
 
-export const errorHandler = (err, req, res) => {
-  if (isHttpError(err)) {
-    res.status(err.status).json({
-      status: err.status,
-      message: err.message,
-      data: err,
-    });
-    return;
-  }
+// export const errorHandler = (err, req, res) => {
+//   if (isHttpError(err)) {
+//     res.status(err.status).json({
+//       status: err.status,
+//       message: err.message,
+//       data: err,
+//     });
+//     return;
+//   }
 
-   if (err instanceof MongooseError) {
+//    if (err instanceof MongooseError) {
 //     res.status(500).json({
 //       status: err.status,
 //       message: 'Mongoose error',
@@ -53,14 +73,14 @@ export const errorHandler = (err, req, res) => {
 //     return;
 //   }
 
-  res.status(500).json({
-    message: 'Something went wrong',
-    error: err.message,
-  });
-};
-};
+//   res.status(500).json({
+//     message: 'Something went wrong',
+//     error: err.message,
+//   });
+// };
+// };
 
 
-export const notFoundHandler = (req, res) => {
-    res.status(404).json({ message: 'Route not found' });
-  };
+// export const notFoundHandler = (req, res) => {
+//     res.status(404).json({ message: 'Route not found' });
+//   };
