@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import pino from 'pino-http';
-import { env } from './utils/env.js';
+// import { env } from './utils/env.js';
 import contactsRouter from './routers/contacts.js';
 import { notFoundHandler } from './middlewares/newFoundHandler.js';
 import { errorHandler } from './middlewares/errorHandler.js';
@@ -22,7 +22,7 @@ const PORT = process.env.PORT || 3000;
       
     }));
 
-    app.use('/contacts', contactsRouter);
+    app.use(contactsRouter);
     app.use('*', notFoundHandler);
     app.use(errorHandler);
 
