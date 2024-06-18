@@ -6,10 +6,22 @@ import { getAllContacts,
         //  patchContact,
  } from '../services/contacts.js';
  import createHttpError from 'http-errors';
+ import parsePaginationParams from '../utils/parsePaginationParams.js';
+ import parseSortParams from '../utils/parseSortParams.js';
+ import { parseFilterParams } from '../utils/parseFilterParams.js';
 //  import Contact from '../models/contacts.js';
 
- export const getAllContactsController = async (req, res) => {
-    const contacts = await getAllContacts();
+ export const getAllContactsController = async (req, res, next) => {
+ const { page, perPage } = parsePaginationParams(req.query);
+ const { sortBy, sortOrder } = parseSortParams(req.query);
+ const filter = parseFilterParams(req.query);
+ const contacts = await getAllContacts(
+      page,
+      perPage,
+      sortBy,
+      sortOrder,
+      filter,
+    );
   
     res.status(200).json({
       status: 200,
@@ -20,7 +32,9 @@ import { getAllContacts,
   
   export const getContactByIdController = async (req, res, next) => {
     const { contactId } = req.params;
+
     const contact = await getContactById(contactId);
+  
   
     if (!contact) {
       next(createHttpError(404, 'Contact not found'));
@@ -33,6 +47,8 @@ import { getAllContacts,
       data: contact,
     });
   };
+
+  console.log('createContact:', createContact);
 
 export const createContactController = async (req, res) => {
     const contact = await createContact(req.body);
