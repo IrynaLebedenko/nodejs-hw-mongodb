@@ -10,11 +10,13 @@ import { getAllContactsController,
  } from '../controllers/contacts.js';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import { validateBody } from '../middlewares/validateBody.js';
+import validateId from '../middlewares/validateId.js';
 import { createContactSchema, updateContactSchema } from '../validation/contacts.js';
  
 
  const router = Router();
 
+ router.use('/contacts/:contactId', validateId('contactId'));
  router.get('/contacts', ctrlWrapper(getAllContactsController));
  router.get('/contacts/:contactId', ctrlWrapper(getContactByIdController));
  router.post('/contacts', validateBody(createContactSchema), ctrlWrapper(createContactController));

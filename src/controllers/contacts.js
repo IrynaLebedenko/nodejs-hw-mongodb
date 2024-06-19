@@ -50,7 +50,8 @@ import { getAllContacts,
 
   console.log('createContact:', createContact);
 
-export const createContactController = async (req, res) => {
+export const createContactController = async (req, res, next) => {
+  try {
     const contact = await createContact(req.body);
   
         res.status(201).json({
@@ -58,6 +59,9 @@ export const createContactController = async (req, res) => {
             message: 'Contact created successfully',
             data: contact,
         });
+      } catch (error) {
+        next(error);
+      }
     
 };
 
@@ -103,7 +107,7 @@ export const deleteContactController = async (req, res, next) => {
   
   export const patchContactController = async (req, res, next) => {
     const { contactId } = req.params;
-    const result = await updateContact( contactId, req.body);
+    const result = await updateContact( contactId, req.body, { new: true});
 
   
     if (!result) {

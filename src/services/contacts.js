@@ -61,7 +61,7 @@ export const getAllContacts = async (page=1, perPage=10, sortBy= 'name', sortOrd
     if (!rawResult || !rawResult.value) return null;
   
     return {
-      student: rawResult.value,
+      contact: rawResult.value,
       isNew: Boolean(rawResult?.lastErrorObject?.upserted),
     };
   };
