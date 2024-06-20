@@ -60,8 +60,6 @@ export const getAllContacts = async (page=1, perPage=10, sortBy= 'name', sortOrd
   
     if (!rawResult || !rawResult.value) return null;
   
-    return {
-      contact: rawResult.value,
-      isNew: Boolean(rawResult?.lastErrorObject?.upserted),
-    };
+    return rawResult;
+    
   };

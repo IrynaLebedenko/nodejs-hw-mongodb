@@ -1,22 +1,3 @@
-// import createHttpError from 'http-errors';
-// import mongoose from 'mongoose';
-// // import { getContactById } from '../services/contacts';
-
-// const validateId = (req, res, next) => {
-//     const {contacId} = req.params;
-
-//     // if (!contactId) {
-//     //   throw new Error(500, 'ID in validateId is not provided');
-//     // }
-
-//     if (!mongoose.Types.ObjectId.isValid(contacId)) {
-//       return next(createHttpError(400, 'Invalid ID'));
-//     }
-
-//     return next();
-//   };
-
-// export default validateId;
 
 
 import createHttpError from 'http-errors';
