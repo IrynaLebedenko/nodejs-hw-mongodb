@@ -51,6 +51,7 @@ export const getAllContacts = async (page=1, perPage=10, sortBy= 'name', sortOrd
     const rawResult = await Contact.findOneAndUpdate(
       { _id: contactId },
       payload,
+     
       {
         new: true,
         includeResultMetadata: true,
@@ -60,6 +61,7 @@ export const getAllContacts = async (page=1, perPage=10, sortBy= 'name', sortOrd
   
     if (!rawResult || !rawResult.value) return null;
   
-    return rawResult;
+    return rawResult.value;
+      
     
   };
