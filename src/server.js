@@ -5,6 +5,8 @@ import pino from 'pino-http';
 import contactsRouter from './routers/contacts.js';
 import { notFoundHandler } from './middlewares/newFoundHandler.js';
 import { errorHandler } from './middlewares/errorHandler.js';
+import cookieParser from 'cookie-parser';
+import router from './routers/auth.js';
 
 const PORT = process.env.PORT || 3000;
 
@@ -21,6 +23,9 @@ const PORT = process.env.PORT || 3000;
         },
       
     }));
+
+    app.use(cookieParser());
+    app.use('/auth', router);
 
     app.use(contactsRouter);
     app.use('*', notFoundHandler);

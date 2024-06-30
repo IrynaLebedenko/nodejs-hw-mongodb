@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 import { randomBytes } from 'crypto';
 import createHttpError from 'http-errors';
-import { UsersCollection } from "../models/user.js";
+import UsersCollection from "../models/user.js";
 import { FIFTEEN_MINUTES, THIRTY_DAY } from '../constants/index.js';
 import { Session } from '../models/session.js';
 
@@ -18,10 +18,11 @@ export const registerUser = async (payload) => {
       );
     }
     return await UsersCollection.create({
-        // status: 201,
-        // message: "Successfully registered a user!",
+        
         ...payload,
         password: encryptedPassword,
+        // status: 201,
+        // message: "Successfully registered a user!",
     });
 };
 

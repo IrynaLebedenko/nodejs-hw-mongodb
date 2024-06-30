@@ -17,12 +17,12 @@ import { authenticate } from '../middlewares/authenticate.js';
 
  const router = Router();
 
- router.use('/', authenticate);
+ router.use(authenticate);
 
  router.use('/:contactId', validateId('contactId'));
  router.get('/', ctrlWrapper(getAllContactsController));
  router.get('/:contactId', ctrlWrapper(getContactByIdController));
- router.post('/', validateBody(createContactSchema), ctrlWrapper(createContactController));
+ router.post('', validateBody(createContactSchema), ctrlWrapper(createContactController));
  router.delete('/:contactId', ctrlWrapper(deleteContactController));
  router.put('/:contactId', validateBody(createContactSchema), ctrlWrapper(upsertContactController));
  router.patch('/:contactId', validateBody(updateContactSchema), ctrlWrapper(patchContactController));
