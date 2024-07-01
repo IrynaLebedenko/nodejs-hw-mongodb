@@ -21,7 +21,7 @@ export const registerUser = async (payload) => {
         
         ...payload,
         password: encryptedPassword,
-        // status: 201,
+        status: 201,
         // message: "Successfully registered a user!",
     });
 };
