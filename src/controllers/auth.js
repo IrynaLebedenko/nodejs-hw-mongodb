@@ -69,14 +69,16 @@ export const logoutUserController = async (req, res, next) => {
 
 export const refreshUserSessionController = async (req, res, next) => {
     try {
-      const { sessionId, refreshToken } = req.cookies;
-      if (!sessionId || !refreshToken) {
-        throw createHttpError(400, 'Session ID and refresh token are required');
-      }
+      console.log('Starting refreshUserSessionController');
+      // const { sessionId, refreshToken } = req.cookies;
+      // if (!sessionId || !refreshToken) {
+      //   throw createHttpError(400, 'Session ID and refresh token are required');
+      // }
   const session = await refreshUsersSession({
     sessionId: req.cookies.sessionId,
     refreshToken: req.cookies.refreshToken,
   });
+  console.log('Session refreshed:', session); 
 
   setupSession(res, session);
 
@@ -88,6 +90,7 @@ export const refreshUserSessionController = async (req, res, next) => {
     },
   });
 } catch (error) {
+  console.log('Error in refreshUserSessionController:', error);
     next (error);
 }
 };
