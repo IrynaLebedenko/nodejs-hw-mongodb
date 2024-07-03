@@ -20,7 +20,7 @@ import { authenticate } from '../middlewares/authenticate.js';
  router.use(authenticate);
 
  router.use('/:contactId', validateId('contactId'));
- router.get('/contacts', ctrlWrapper(getAllContactsController));
+ router.get('/', ctrlWrapper(getAllContactsController));
  router.get('/:contactId', ctrlWrapper(getContactByIdController));
  router.post('', validateBody(createContactSchema), ctrlWrapper(createContactController));
  router.delete('/:contactId', ctrlWrapper(deleteContactController));
