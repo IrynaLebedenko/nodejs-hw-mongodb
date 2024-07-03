@@ -3,7 +3,7 @@ import { loginUser } from "../services/auth.js";
 import { THIRTY_DAY } from "../constants/index.js";
 import { refreshUsersSession } from "../services/auth.js";
 import { logoutUser } from "../services/auth.js";
-import createHttpError from "http-errors";
+// import createHttpError from "http-errors";
 
 export const registerUserController = async (req, res, next) => {
     
@@ -50,20 +50,18 @@ export const loginUserController = async (req, res, next) => {
 
 export const logoutUserController = async (req, res, next) => {
     try {
-      const { sessionId, refreshToken } = req.cookies;
-  if (!sessionId || !refreshToken) {
-   throw createHttpError(400, 'Session ID and refresh token are required');
-  }
-  await logoutUser(sessionId);
+      console.log('Starting logoutUserController'); 
+      await logoutUser(req.sessionId);
+  
+      res.clearCookie('sessionId');
+      res.clearCookie('refreshToken');
 
-  res.clearCookie('sessionId');
-  res.clearCookie('refreshToken');
-
-  res.status(204).send();
-} catch (error) {
-     next(error);
-}
-};
+      res.status(204).send();
+    } catch (error) {
+      console.log('Error in logoutUserController:', error); 
+      next(error);
+    }
+  };
 
 
 
@@ -75,8 +73,8 @@ export const refreshUserSessionController = async (req, res, next) => {
       //   throw createHttpError(400, 'Session ID and refresh token are required');
       // }
   const session = await refreshUsersSession({
-    sessionId: req.cookies.sessionId,
-    refreshToken: req.cookies.refreshToken,
+    sessionId: req.sessionId,
+    refreshToken: req.refreshToken,
   });
   console.log('Session refreshed:', session); 
 

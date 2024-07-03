@@ -25,6 +25,7 @@ const validateId =
     console.error('Error in validateId middleware:', error);
     return next(createHttpError(500, error.message));
 }
+
   };
 
 export default validateId;
