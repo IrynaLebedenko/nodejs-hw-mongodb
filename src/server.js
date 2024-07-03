@@ -27,7 +27,7 @@ const PORT = process.env.PORT || 3000;
     app.use(cookieParser());
     app.use('/auth', router);
 
-    app.use(contactsRouter);
+    app.use('/contacts', contactsRouter);
     app.use('*', notFoundHandler);
     app.use(errorHandler);
 
