@@ -6,6 +6,7 @@ import { getAllContacts,
 
 } from '../services/contacts.js';
 import createHttpError from 'http-errors';
+
 import parsePaginationParams from '../utils/parsePaginationParams.js';
 import parseSortParams from '../utils/parseSortParams.js';
 import { parseFilterParams } from '../utils/parseFilterParams.js';
@@ -16,15 +17,15 @@ try {
   const { _id: userId } = req.user;
 const { page, perPage } = parsePaginationParams(req.query);
 const { sortBy, sortOrder } = parseSortParams(req.query);
-const filter = { ...parseFilterParams(req.query), userId };
-const contacts = await getAllContacts(
-page,
+const filter = { ...parseFilterParams(req.query) };
+const contacts = await getAllContacts({
+  page,
 perPage,
 sortBy,
 sortOrder,
 filter,
 userId
-);
+ });
 
 res.status(200).json({
 status: 200,
@@ -123,13 +124,15 @@ next(error);
 };
 
 export const patchContactController = async (req, res, next) => {
+ 
 const { contactId } = req.params;
 const { _id: userId } = req.user;
 const result = await updateContact( contactId, userId, req.body);
 
 
 if (!result) {
-next(createHttpError(404, {
+next(
+  createHttpError(404, {
  status: 404,
  message: ' Not found',
  data: { message: 'Contact not found'}
@@ -140,6 +143,11 @@ return;
 res.status(200).json({
  status: 200,
  message: 'Successfully patched a contact!',
- data: result.contact,
+ data: result,
 });
+  
 };
+ 
+ 
+ 
+ 
