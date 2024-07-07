@@ -2,8 +2,11 @@ import bcrypt from 'bcrypt';
 import { randomBytes } from 'crypto';
 import createHttpError from 'http-errors';
 import UsersCollection from "../models/user.js";
-import { FIFTEEN_MINUTES, THIRTY_DAY } from '../constants/index.js';
+import { EMAIL_VARS, FIFTEEN_MINUTES, THIRTY_DAY } from '../constants/index.js';
 import { Session } from '../models/session.js';
+import {env} from '../utils/env.js';
+import jwt from 'jsonwebtoken';
+import { sendEmail } from '../utils/sendEmail.js';
 
 
 
@@ -98,3 +101,36 @@ export const refreshUsersSession = async ({ sessionId, refreshToken }) => {
     ...newSession,
   });
 };
+
+ export const requestResetToken = async (email) => {
+  console.log(` looking for user email: ${email}`);
+const user = await UsersCollection.findOne({ email });
+console.log(`find user:${user}`);
+if (!user) {
+  throw createHttpError(404, 'User not found');
+};
+  const resetToken = jwt.sign(
+    {
+    sub: user._id,
+    email
+  }, 
+  env('JWT_SECRET'),
+  {
+    expiresIn: '5m',
+  },
+);
+try {
+  await sendEmail({
+    from: env(EMAIL_VARS.SMTP_USER),
+    to: email,
+    subject: 'Reset your password',
+    html: `<p>Click <a href="${resetToken}">here</a> to reset your password!</p>`,
+  });
+} catch(error){
+  console.log(error);
+  throw createHttpError(500, 'Problem with sending email');
+}
+
+
+
+ };
