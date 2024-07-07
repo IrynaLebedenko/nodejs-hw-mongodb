@@ -16,14 +16,14 @@ try {
   const { _id: userId } = req.user;
 const { page, perPage } = parsePaginationParams(req.query);
 const { sortBy, sortOrder } = parseSortParams(req.query);
-const filter = { ...parseFilterParams(req.query), userId };
+const filter = { ...parseFilterParams(req.query)};
 const contacts = await getAllContacts(
-page,
+{page,
 perPage,
 sortBy,
 sortOrder,
 filter,
-userId
+userId}
 );
 
 res.status(200).json({
@@ -140,6 +140,6 @@ return;
 res.status(200).json({
  status: 200,
  message: 'Successfully patched a contact!',
- data: result.contact,
+ data: result,
 });
 };
