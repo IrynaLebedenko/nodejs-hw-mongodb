@@ -118,10 +118,13 @@ if (!user) {
   {
     expiresIn: '5m',
   },
+  
 );
+// console.log('/n', 'resetToken: ', resetToken, '/n');
+  
 try {
   await sendEmail({
-    from: env(EMAIL_VARS.SMTP_USER),
+    from: env(EMAIL_VARS.SMTP_FROM),
     to: email,
     subject: 'Reset your password',
     html: `<p>Click <a href="${resetToken}">here</a> to reset your password!</p>`,
