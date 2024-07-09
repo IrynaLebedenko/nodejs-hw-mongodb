@@ -116,10 +116,11 @@ if (!user) {
 };
   const resetToken = jwt.sign(
     {
-    sub: user._id,
-    email
-  }, 
-  env(EMAIL_VARS.JWT_SECRET),
+      sub: user._id,
+      email
+    },
+    env(ENV_VARS.JWT_SECRET),
+    console.log('JWT Secret:', ENV_VARS.JWT_SECRET),
   {
     expiresIn: '5m',
   },
@@ -137,13 +138,18 @@ const templateSource = (
   await fs.readFile(resetPasswordTemplatePath)
 ).toString();
 console.log('Template source:', templateSource);
+  console.log('JWT_SECRET:', env(EMAIL_VARS.JWT_SECRET));
+  console.log('Frontend host:', env(ENV_VARS.FRONTEND_HOST));
 
+  const template = handlebars.compile(templateSource);
+  const resetLink = `${env(ENV_VARS.FRONTEND_HOST)}/reset-password?token=${resetToken}`;
+  console.log('Generated reset link:', resetLink);
 
-const template = handlebars.compile(templateSource);
 const html = template({
   name: user.name,
-  link: `${env(ENV_VARS.FRONTEND_HOST)}/reset-password?token=${resetToken}`,
+  link: resetLink, /*`${env(ENV_VARS.FRONTEND_HOST)}/reset-password?token=${resetToken}`,*/
 });
+  console.log('Generated email HTML:', html);
   
 try {
   await sendEmail({
@@ -152,6 +158,7 @@ try {
     subject: 'Reset your password',
     html,
   });
+   console.log('Email sent successfully with reset link:', resetLink);
 } catch(error){
   console.log(error);
   throw createHttpError(500, 'Problem with sending email');

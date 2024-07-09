@@ -8,6 +8,7 @@ import { notFoundHandler } from './middlewares/newFoundHandler.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 
 import router from './routers/index.js';
+import { UPLOAD_DIR } from './constants/index.js';
 
 const PORT = process.env.PORT || 3000;
 
@@ -37,6 +38,8 @@ const PORT = process.env.PORT || 3000;
    app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`); 
    });
+
+    app.use('/uploads', express.static(UPLOAD_DIR));
 };
   
  
