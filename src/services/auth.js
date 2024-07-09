@@ -2,11 +2,15 @@ import bcrypt from 'bcrypt';
 import { randomBytes } from 'crypto';
 import createHttpError from 'http-errors';
 import UsersCollection from "../models/user.js";
-import { EMAIL_VARS, FIFTEEN_MINUTES, THIRTY_DAY } from '../constants/index.js';
+import { EMAIL_VARS, ENV_VARS, FIFTEEN_MINUTES, TEMPLATES_DIR, THIRTY_DAY } from '../constants/index.js';
 import { Session } from '../models/session.js';
 import {env} from '../utils/env.js';
 import jwt from 'jsonwebtoken';
 import { sendEmail } from '../utils/sendEmail.js';
+import handlebars from 'handlebars';
+import path from 'node:path';
+import fs from 'node:fs/promises';
+
 
 
 
@@ -102,7 +106,8 @@ export const refreshUsersSession = async ({ sessionId, refreshToken }) => {
   });
 };
 
- export const requestResetToken = async (email) => {
+
+export const requestResetToken = async (email) => {
   console.log(` looking for user email: ${email}`);
 const user = await UsersCollection.findOne({ email });
 console.log(`find user:${user}`);
@@ -114,26 +119,71 @@ if (!user) {
     sub: user._id,
     email
   }, 
-  env('JWT_SECRET'),
+  env(EMAIL_VARS.JWT_SECRET),
   {
     expiresIn: '5m',
   },
   
 );
-// console.log('/n', 'resetToken: ', resetToken, '/n');
+
+
+const resetPasswordTemplatePath = path.join(
+  TEMPLATES_DIR,
+  'resetPasswordEmail.html',
+);
+console.log('Reset password template path:', resetPasswordTemplatePath);
+
+const templateSource = (
+  await fs.readFile(resetPasswordTemplatePath)
+).toString();
+console.log('Template source:', templateSource);
+
+
+const template = handlebars.compile(templateSource);
+const html = template({
+  name: user.name,
+  link: `${env(ENV_VARS.FRONTEND_HOST)}/reset-password?token=${resetToken}`,
+});
   
 try {
   await sendEmail({
     from: env(EMAIL_VARS.SMTP_FROM),
     to: email,
     subject: 'Reset your password',
-    html: `<p>Click <a href="${resetToken}">here</a> to reset your password!</p>`,
+    html,
   });
 } catch(error){
   console.log(error);
   throw createHttpError(500, 'Problem with sending email');
 }
-
-
-
  };
+
+
+ 
+export const resetPassword = async (payload) => {
+  let entries;
+
+  try {
+    entries = jwt.verify(payload.token, env('JWT_SECRET'));
+  } catch (err) {
+    if (err instanceof Error) throw createHttpError(401, err.message);
+    throw err;
+  }
+
+  const user = await UsersCollection.findOne({
+    email: entries.email,
+    _id: entries.sub,
+  });
+
+  if (!user) {
+    throw createHttpError(404, 'User not found');
+  }
+
+  const encryptedPassword = await bcrypt.hash(payload.password, 10);
+
+  await UsersCollection.updateOne(
+    { _id: user._id },
+    { password: encryptedPassword },
+  );
+};
+

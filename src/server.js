@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import pino from 'pino-http';
+// import pino from 'pino-http';
 import cookieParser from 'cookie-parser';
 // import { env } from './utils/env.js';
 // import contactsRouter from './routers/contacts.js';
@@ -18,12 +18,12 @@ const PORT = process.env.PORT || 3000;
       type: ['application/json', 'application/vnd.api+json'],
     }));
     app.use(cors());
-    app.use(pino({
-      transport: 
-        {target: 'pino-pretty',
-        },
+    // app.use(pino({
+    //   transport: 
+    //     {target: 'pino-pretty',
+    //     },
       
-    }));
+    // }));
 
     app.use(cookieParser());
     app.use(router);

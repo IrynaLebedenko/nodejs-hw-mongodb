@@ -1,3 +1,4 @@
+import path from 'node:path';
 
 export const SORT_ORDER = {
     ASC: 'asc',
@@ -15,3 +16,13 @@ SMTP_USER: 'SMTP_USER',
 SMTP_PASS: 'SMTP_PASS',
 SMTP_FROM: 'SMTP_FROM'
 };
+
+export const ENV_VARS = {
+  // PORT: 'PORT',
+  JWT_SECRET: 'JWT_SECRET',
+  FRONTEND_HOST: 'FRONTEND_HOST',
+  // BACKEND_HOST: 'BACKEND_HOST',
+  // IS_CLOUDINARY_ENABLED: 'IS_CLOUDINARY_ENABLED',
+};
+
+export const TEMPLATES_DIR = path.join(process.cwd(), 'src', 'templates');
