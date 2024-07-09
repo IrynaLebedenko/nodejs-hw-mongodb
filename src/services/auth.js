@@ -138,7 +138,7 @@ const templateSource = (
   await fs.readFile(resetPasswordTemplatePath)
 ).toString();
 console.log('Template source:', templateSource);
-  console.log('JWT_SECRET:', env(EMAIL_VARS.JWT_SECRET));
+  console.log('JWT_SECRET:', env(ENV_VARS.JWT_SECRET));
   console.log('Frontend host:', env(ENV_VARS.FRONTEND_HOST));
 
   const template = handlebars.compile(templateSource);
