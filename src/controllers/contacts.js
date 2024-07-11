@@ -44,7 +44,7 @@ next(error);
 export const getContactByIdController = async (req, res, next) => {
 try {
 const { contactId } = req.params;
-const { _id: userId } = req.params;
+const { _id: userId } = req.user;
 
 const contact = await getContactById(contactId, userId);
 
@@ -69,7 +69,21 @@ console.log('createContact:', createContact);
 export const createContactController = async (req, res, next) => {
 try {
   const { _id: userId } = req.user;
-const contact = await createContact({ ...req.body, userId});
+  const photo = req.file;
+
+  let photoUrl;
+
+  if (photo) {
+    if (env(ENV_VARS.ENABLE_CLOUDINARY) === 'true') {
+      photoUrl = await saveFileToCloudinary(photo);
+    } else {
+      photoUrl = await saveFileToUploadDir(photo);
+    }
+  }
+
+  console.log('createContactController starts create contact');
+
+const contact = await createContact({ ...req.body, userId, photo: photoUrl});
 
  res.status(201).json({
      status: 201,
@@ -77,6 +91,7 @@ const contact = await createContact({ ...req.body, userId});
      data: contact,
  });
 } catch (error) {
+  console.log('createContactController error:', error);
  next(error);
 }
 
@@ -104,11 +119,31 @@ next(error);
 
 export const upsertContactController = async (req, res, next) => {
 try {
-const { contactId } = req.params;
+  const { contactId } = req.params;
+  const { _id: userId } = req.user;
+  const photo = req.file;
 
-const result = await updateContact(contactId, req.body, {
-upsert: true,
-});
+  let photoUrl;
+
+  if (photo) {
+    if (env(ENV_VARS.ENABLE_CLOUDINARY) === 'true') {
+      photoUrl = await saveFileToCloudinary(photo);
+    } else {
+      photoUrl = await saveFileToUploadDir(photo);
+    }
+  }
+
+  const result = await updateContact(
+    contactId,
+    userId,
+    {
+      ...req.body,
+      photo: photoUrl
+    },
+    {
+      upsert: true,
+    }
+  );
 
 if (!result) {
 next(createHttpError(404, 'Contact not found'));
