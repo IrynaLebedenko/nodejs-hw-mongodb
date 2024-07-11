@@ -8,7 +8,7 @@ import { env } from "./env.js";
    
     auth: {
         user: env(EMAIL_VARS.SMTP_USER),
-        password: env(EMAIL_VARS.SMTP_PASSWORD),
+        pass: env(EMAIL_VARS.SMTP_PASSWORD),
     }
    
  });
