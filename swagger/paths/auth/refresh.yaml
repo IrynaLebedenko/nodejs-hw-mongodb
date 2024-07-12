@@ -3,7 +3,8 @@ tags:
 summary: Refresh user
 operationId: PostAuthRefresh
 description: 'Refresh user'
-
+security:
+  - bearerAuth: []
 requestBody:
   content:
     application/json:

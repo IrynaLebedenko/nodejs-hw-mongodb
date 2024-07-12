@@ -3,7 +3,8 @@ tags:
 summary: Login user
 operationId: PostAuthLogin
 description: 'Login user'
-
+security:
+  - bearerAuth: []
 requestBody:
   content:
     application/json:

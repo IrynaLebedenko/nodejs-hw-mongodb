@@ -3,7 +3,8 @@ tags:
 summary: Register user
 operationId: PostAuthRegister
 description: 'Register user'
-
+security:
+  - bearerAuth: []
 requestBody:
   content:
     application/json:
@@ -20,9 +21,9 @@ requestBody:
           email:
             type: string
             example: jhvnbv.example.com
-            password:
-              type: string
-              example: jhvnbv32465
+          password:
+            type: string
+            example: jhvnbv32465
 responses:
   '201':
     description: User was registered
