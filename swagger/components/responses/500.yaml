@@ -1,4 +1,4 @@
-description: Something went wrong
+description: Problem with sending email
 content:
   application/json:
     schema:
@@ -13,4 +13,4 @@ content:
           example: 500
         message:
           type: string
-          example: Something went wrong
+          example: Problem with sending email

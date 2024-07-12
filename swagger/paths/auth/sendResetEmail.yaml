@@ -35,22 +35,6 @@ responses:
               type: string
               example: Reset password email was successfully sent!
   '500':
-    escription: Problem with sending email
-content:
-  application/json:
-    schema:
-      type: object
-      required:
-        - status
-        - message
-        - data
-      properties:
-        status:
-          type: integer
-          example: 500
-        message:
-          type: string
-          example: Problem with sending email
-
+    $ref: '../../components/responses/500.yaml'
   '400':
     $ref: '../../components/responses/400.yaml'

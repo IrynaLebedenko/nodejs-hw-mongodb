@@ -773,33 +773,11 @@
               }
             }
           },
-          "500": {
-            "escription": "Problem with sending email"
-          }
-        },
-        "content": {
           "400": {
-            "$ref": "../../components/responses/400.yaml"
+            "$ref": "#/components/responses/400"
           },
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "required": [
-                "status",
-                "message",
-                "data"
-              ],
-              "properties": {
-                "status": {
-                  "type": "integer",
-                  "example": 500
-                },
-                "message": {
-                  "type": "string",
-                  "example": "Problem with sending email"
-                }
-              }
-            }
+          "500": {
+            "$ref": "#/components/responses/500"
           }
         }
       }
@@ -818,6 +796,29 @@
           }
         ],
         "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "token",
+                  "password"
+                ],
+                "properties": {
+                  "token": {
+                    "type": "string",
+                    "example": "JhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NjhjNGYyYTc1ZDE"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "3546mfhv4"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
           "200": {
             "description": "Password was successfully reset!",
             "content": {
@@ -844,33 +845,11 @@
             }
           },
           "400": {
-            "$ref": "../../components/responses/400.yaml"
+            "$ref": "#/components/responses/400"
           },
           "500": {
-            "$ref": "../../components/responses/500.yaml"
-          },
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "required": [
-                  "token",
-                  "password"
-                ],
-                "properties": {
-                  "token": {
-                    "type": "string",
-                    "example": "JhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NjhjNGYyYTc1ZDE"
-                  },
-                  "password": {
-                    "type": "string",
-                    "example": "3546mfhv4"
-                  }
-                }
-              }
-            }
-          },
-          "responses": null
+            "$ref": "#/components/responses/500"
+          }
         }
       }
     }
@@ -1050,7 +1029,7 @@
         }
       },
       "500": {
-        "description": "Something went wrong",
+        "description": "Problem with sending email",
         "content": {
           "application/json": {
             "schema": {
@@ -1067,7 +1046,7 @@
                 },
                 "message": {
                   "type": "string",
-                  "example": "Something went wrong"
+                  "example": "Problem with sending email"
                 }
               }
             }
