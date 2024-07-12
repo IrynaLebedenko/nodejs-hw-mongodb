@@ -14,7 +14,7 @@
       "url": "<http://localhost:3000>"
     },
     {
-      "url": "<https://example.com/api/v1>post"
+      "url": "https://nodejs-hw-mongodb-36-i0v8.onrender.com/api-docs"
     }
   ],
   "tags": [

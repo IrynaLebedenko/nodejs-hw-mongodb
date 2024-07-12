@@ -1,8 +1,8 @@
 tags:
-  - auth/login
+  - Auth
 summary: Login user
 operationId: PostAuthLogin
-description: 'Login user'
+description: Login user
 security:
   - bearerAuth: []
 requestBody:

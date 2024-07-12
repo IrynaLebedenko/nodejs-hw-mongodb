@@ -1,5 +1,5 @@
 tags:
-  - auth/logout
+  - Auth
 summary: Logout user
 operationId: PostAuthLogout
 description: 'Logout user'

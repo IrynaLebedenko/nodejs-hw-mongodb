@@ -1,5 +1,5 @@
 tags:
-  - auth/refresh
+  - Auth
 summary: Refresh user
 operationId: PostAuthRefresh
 description: 'Refresh user'
