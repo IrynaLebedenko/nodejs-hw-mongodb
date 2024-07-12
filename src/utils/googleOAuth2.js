@@ -1,32 +1,26 @@
 
-import { OAuth2Client, type LoginTicket } from 'google-auth-library';
-import oauthGonfig from '../../google-oauth.json';
+import { OAuth2Client} from 'google-auth-library';
+// import oauthСonfig from '../../google-oauth.json';
 import createHttpError from 'http-errors';
-import { env } from './env.js'
+import { env } from './env.js';
 import { GOOGLE } from '../constants/index.js';
 import path from 'node:path';
 import { readFile } from 'fs/promises';
 
-import { env } from './env.js';
-import createHttpError from 'http-errors';
 
+
+
+
+const PATH_JSON = path.join(process.cwd(), 'google-oauth.json');
+
+const oauthConfig = JSON.parse(await readFile(PATH_JSON));
 const googleOAuthClient = new OAuth2Client({
   clientId: env(GOOGLE.CLIENT_ID),
   clientSecret: env(GOOGLE.CLIENT_SECRET),
   redirectUri: oauthConfig.web.redirect_uris[0],
 });
 
-const PATH_JSON = path.join(process.cwd(), 'google-oauth.json');
-
-const oauthConfig = JSON.parse(await readFile(PATH_JSON));
-
-const googleOAuthClient = new OAuth2Client({
-  clientId: env('GOOGLE_AUTH_CLIENT_ID'),
-  clientSecret: env('GOOGLE_AUTH_CLIENT_SECRET'),
-  redirectUri: oauthConfig.web.redirect_uris[0],
-});
-
-export const generateAuthUrl = (): string =>
+export const generateAuthUrl = () =>
   googleOAuthClient.generateAuthUrl({
     scope: [
       '<https://www.googleapis.com/auth/userinfo.email>',
@@ -35,7 +29,7 @@ export const generateAuthUrl = (): string =>
   });
 
 
-  export const validateCode = async (code: string): Promise<LoginTicket> => {
+  export const validateCode = async (code) => {
   const response = await googleOAuthClient.getToken(code);
   if (!response.tokens.id_token) throw createHttpError(401, 'Unauthorized');
 
