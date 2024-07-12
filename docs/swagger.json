@@ -846,9 +846,6 @@
           },
           "400": {
             "$ref": "#/components/responses/400"
-          },
-          "500": {
-            "$ref": "#/components/responses/500"
           }
         }
       }
