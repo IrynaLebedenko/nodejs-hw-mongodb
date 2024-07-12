@@ -48,4 +48,4 @@ export const getFullNameFromGoogleTokenPayload = (payload) => {
   }
 
   return fullName;
-};
+}; 

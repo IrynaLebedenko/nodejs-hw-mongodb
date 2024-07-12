@@ -1,0 +1,47 @@
+tags:
+  - auth/register
+summary: Register user
+operationId: PostAuthRegister
+description: 'Register user'
+
+requestBody:
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - name
+          - email
+          - password
+        properties:
+          name:
+            type: string
+            example: 'John Doe'
+          email:
+            type: string
+            example: jhvnbv.example.com
+            password:
+              type: string
+              example: jhvnbv32465
+responses:
+  '201':
+    description: User was registered
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 201
+            message:
+              type: string
+              example: Successfully registered user!
+  '500':
+    $ref: '../../components/responses/500.yaml'
+  '400':
+    $ref: '../../components/responses/400.yaml'
