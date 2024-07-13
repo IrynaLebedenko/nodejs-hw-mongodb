@@ -557,6 +557,33 @@
                     "message": {
                       "type": "string",
                       "example": "Successfully registered user!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string",
+                          "example": "JoN Lenon"
+                        },
+                        "email": {
+                          "type": "string",
+                          "example": "kjhgfg@example.com'",
+                          "_id": {
+                            "type": "string",
+                            "example": "6692aebf70368fece3e4c12f"
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "format": "date-time",
+                            "example": "2024-07-13T16:43:43.277Z"
+                          },
+                          "updatedAt": {
+                            "type": "string",
+                            "format": "date-time",
+                            "example": "2024-07-13T16:43:43.277Z"
+                          }
+                        }
+                      }
                     }
                   }
                 }
@@ -625,6 +652,15 @@
                     "message": {
                       "type": "string",
                       "example": "Successfully logged in an user!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "accessToken": {
+                          "type": "string",
+                          "example": "TlC2HOad/gUl4YlcjdbysFsR73PsKgxfs1v8W/M5"
+                        }
+                      }
                     }
                   }
                 }

@@ -38,5 +38,11 @@ responses:
             message:
               type: string
               example: Successfully logged in an user!
+            data:
+              type: object
+              properties:
+                accessToken:
+                  type: string
+                  example: TlC2HOad/gUl4YlcjdbysFsR73PsKgxfs1v8W/M5 
   '400':
     $ref: '../../components/responses/400.yaml'
