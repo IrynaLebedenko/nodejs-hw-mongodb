@@ -13,9 +13,12 @@ requestBody:
         required:
           - name
           - phoneNumber
-          - contactType
-          - userId
+          - email
         properties:
+          _id:
+            description: "Contact's id"
+            type: string
+            example: 668e5361096c701389e16a91
           name:
             description: "Contact's name"
             type: string
@@ -25,15 +28,28 @@ requestBody:
             type: number
             example: +380965584628
           contactType:
-            description: 'Whether is student on duty'
+            description: 'Type of a contact'
             type: string
             enum: ['work', 'home', 'personal']
             example: 'work'
             default: 'personal'
-          userId:
+          email:
             type: string
-            description: 'ID of the user who created the contact'
-            example: '65e4decdd286b30065d54af9'
+            description: 'Email of a contact'
+            example: 'jhgd@example.com'
+          isFavourite:
+            description: 'Whether contact is favourite'
+            type: boolean
+            example: false
+          userId:
+            description: 'id of current user'
+            type: string
+            example: 65e4decdd286b30065d54af9
+          photo:
+            description: "Link to contact's photo"
+            type: string
+            example: <https://res.cloudinary.com/uqwgdu/image/upload/image.png>
+            format: binary
 
 responses:
   '201':
