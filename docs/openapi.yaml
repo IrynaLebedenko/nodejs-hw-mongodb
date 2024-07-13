@@ -30,15 +30,25 @@ components:
 paths:
   /contacts:
     get:
+      security:
+        - bearerAuth: []
       $ref: ../swagger/paths/contacts/get.yaml
     post:
+      security:
+        - bearerAuth: []
       $ref: ../swagger/paths/contacts/post.yaml
   /contacts/{id}:
     get:
+      security:
+        - bearerAuth: []
       $ref: ../swagger/paths/contacts/{id}/get.yaml
     patch:
+      security:
+        - bearerAuth: []
       $ref: ../swagger/paths/contacts/{id}/patch.yaml
     delete:
+      security:
+        - bearerAuth: []
       $ref: ../swagger/paths/contacts/{id}/delete.yaml
   /auth/register:
     post:

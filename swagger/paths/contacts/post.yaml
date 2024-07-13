@@ -14,10 +14,6 @@ requestBody:
           - phoneNumber
           - email
         properties:
-          _id:
-            description: "Contact's id"
-            type: string
-            example: 668e5361096c701389e16a91
           name:
             description: "Contact's name"
             type: string

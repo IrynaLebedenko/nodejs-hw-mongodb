@@ -19,12 +19,13 @@ const PORT = process.env.PORT || 3000;
     app.use(express.json({
       type: ['application/json', 'application/vnd.api+json'],
     }));
+    app.use(cors());
    
    app.use('/uploads', express.static(UPLOAD_DIR));
    app.use('/api-docs', swaggerDocs());
 
    
-    app.use(cors());
+   
     app.use(pino({
       transport: 
         {target: 'pino-pretty',

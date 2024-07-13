@@ -38,17 +38,17 @@
   "paths": {
     "/contacts": {
       "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "tags": [
           "Contacts"
         ],
         "summary": "Get list of contacts",
         "operationId": "getContacts",
         "description": "Get list of users with this endpoint",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
         "parameters": [
           {
             "in": "query",
@@ -164,13 +164,17 @@
         }
       },
       "post": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "tags": [
           "Contacts"
         ],
         "summary": "Create contact",
         "operationId": "createContact",
         "description": "Create a contact with payload",
-        "security": [],
         "requestBody": {
           "content": {
             "multipart/form-data": {
@@ -182,11 +186,6 @@
                   "email"
                 ],
                 "properties": {
-                  "_id": {
-                    "description": "Contact's id",
-                    "type": "string",
-                    "example": "668e5361096c701389e16a91"
-                  },
                   "name": {
                     "description": "Contact's name",
                     "type": "string",
@@ -270,17 +269,17 @@
     },
     "/contacts/{id}": {
       "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "tags": [
           "Contacts"
         ],
         "summary": "Get contact by id",
         "operationId": "getContact",
         "description": "Get contact by id",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
         "parameters": [
           {
             "in": "path",
@@ -331,24 +330,23 @@
         }
       },
       "patch": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "tags": [
           "Contacts"
         ],
         "summary": "Update contact by id",
         "operationId": "patchContact",
         "description": "Patch contact by id",
-        "security": [],
         "requestBody": {
           "content": {
             "multipart/form-data": {
               "schema": {
                 "type": "object",
                 "properties": {
-                  "_id": {
-                    "description": "Contact's id",
-                    "type": "string",
-                    "example": "668e5361096c701389e16a91"
-                  },
                   "name": {
                     "description": "Contact's name",
                     "type": "string",
@@ -438,17 +436,17 @@
         }
       },
       "delete": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "tags": [
           "Contacts"
         ],
         "summary": "Delete contact by id",
         "operationId": "deleteContact",
         "description": "Delete contact by id",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
         "parameters": [
           {
             "in": "path",
