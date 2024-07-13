@@ -3,8 +3,7 @@ tags:
 summary: Update contact by id
 operationId: patchContact
 description: 'Patch contact by id'
-security:
-  - bearerAuth: []
+security: []
 requestBody:
   content:
     multipart/form-data:
@@ -37,10 +36,6 @@ requestBody:
             description: 'Whether contact is favourite'
             type: boolean
             example: false
-          userId:
-            description: 'id of current user'
-            type: string
-            example: 65e4decdd286b30065d54af9
           photo:
             description: "Link to contact's photo"
             type: string
